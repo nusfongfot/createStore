@@ -16,13 +16,17 @@ function Home({ data, handleChange, loading }) {
     const res = await axios.get(url)
     const items = await res.data
     const selectedProduct = items.filter((item) => {
-      const category = item.category
+      const category = item.category 
+      const title = item.title 
+      const desc = item.description     
       const filterCate = category.toLowerCase().includes(search.toLowerCase())
-      return filterCate
+      const filterDesc = desc.toLowerCase().includes(search.toLowerCase())
+      const filterTitle = title.toLowerCase().includes(search.toLowerCase())
+      return filterCate || filterDesc || filterTitle
     })
     setResultSearch(selectedProduct)
   }
-
+  console.log(resultSearch);
   const handleSubmit = async (e) => {
     e.preventDefault()
     await handleSearch()
@@ -37,7 +41,7 @@ function Home({ data, handleChange, loading }) {
             <input
               type="text"
               className="form-control"
-              placeholder="Search ['electronics','men's clothing','jewelery','women's clothing']"
+              placeholder="Search Item"
               aria-label="Search a item"
               aria-describedby="basic-addon1"
               value={search}
